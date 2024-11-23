@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: exalt-hexagonal-archi-kafka-keycloak-bs-ms-operation
+
+  main:
+    banner-mode: off
+
+  datasource:
+    url: jdbc:mysql://localhost:3309/operation_api_db
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+server:
+  port: 8283
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      enabled: true
+      show-components: always
+      probes:
+        enabled: true # enable /actuator/health/liveness and /actuator/health/readiness for K8s
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: exalt-hexagonal-archi-kafka-keycloak-bs-ms-notification-service
+
+  main:
+    banner-mode: off
+
+server:
+  port: 8284
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-components: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
