@@ -6,7 +6,7 @@ pipeline {
     }
     stages {
         stage("Stage: Build") {
-            step {
+            steps {
                 checkout scmGit(branches: [[name: "*/main"]],
                         extensions: [lfs()],
                         userRemoteConfigs: [[url: "https://github.com/pnd-devops-projects-o7/exalt-fullstack-kafka-event-driven-microservices-archi-bank-account-app-keycloak-v3.git"]]
