@@ -66,9 +66,11 @@ pipeline {
         }
 
         stage("Stage: Publish docker images"){
-            script {
-                withDockerRegistry([ credentialsId: "dockerhub-credentials", url: "" ]) {
-                    sh "docker compose -f ./docker/docker-compose-manifest.yml push"
+            steps {
+                script {
+                    withDockerRegistry([ credentialsId: "dockerhub-credentials", url: "" ]) {
+                        sh "docker compose -f ./docker/docker-compose-manifest.yml push"
+                    }
                 }
             }
         }
