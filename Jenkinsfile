@@ -56,7 +56,7 @@ pipeline {
        stage("Stage: Docker img Build") {
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: "dockerhub-credentials", url: ""]){
+                    withDockerRegistry([ credentialsId: "dockerhub-credentials-jenkins", url: ""]){
                         sh "docker compose -f ./docker/docker-compose-manifest.yml build"
                         sh "docker system prune -f"
                     }
