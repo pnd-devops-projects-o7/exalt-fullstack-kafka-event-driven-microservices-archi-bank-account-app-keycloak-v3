@@ -9,7 +9,7 @@ pipeline {
             steps {
                 checkout scmGit(
                         branches: [[name: "*/main"]],
-                        extensions: [rfs],
+                        extensions: [],
                         userRemoteConfigs: [[url: "https://github.com/placidenduwayo1/exalt-fullstack-bank-account-app-base-microservices-v2.git"]])
             }
         }
