@@ -196,6 +196,30 @@ services:
         condition: service_healthy
     restart: no
 #------------ business microservices-----------------
+  exalt-hexagonal-archi-kafka-keycloak-bs-ms-bank-account:
+    container_name: ${BANK_ACCOUNT_APPLICATION_NAME}
+    image: placidenduwayo1/${BANK_ACCOUNT_APPLICATION_NAME}:${APPLICATION_TAG}
+    build:
+      context: ../bank-account-app-back/exalt-hexagonal-archi-kafka-keycloak-bs-ms-bank-account
+      dockerfile: Dockerfile
+    ports:
+      - ${BANK_ACCOUNT_SERVER_PORT}:${BANK_ACCOUNT_SERVER_PORT}
+    environment:
+      BANK_ACCOUNT_APPLICATION_NAME: ${BANK_ACCOUNT_APPLICATION_NAME}
+      BANK_ACCOUNT_SERVER_PORT: ${BANK_ACCOUNT_SERVER_PORT}
+      DATABASE_HOSTNAME: ${DATABASE_HOSTNAME}
+      DATABASE_HOST_PORT: ${DATABASE_HOST_PORT
+      BANK_ACCOUNT_DATABASE: ${BANK_ACCOUNT_DATABASE}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      SERVICE_REGISTRY_APPLICATION_NAME: ${SERVICE_REGISTRY_APPLICATION_NAME}
+      SERVICE_REGISTRY_SERVER_PORT: ${SERVICE_REGISTRY_SERVER_PORT}
+    depends_on:
+      exalt-hexagonal-archi-kafka-keycloak-eureka-server:
+        condition: service_healthy
+    networks:
+      - bank-account-app-net
+
 networks:
   bank-account-app-net:
     driver: bridge
