@@ -141,8 +141,8 @@ services:
       - "start-dev"
 
   exalt-hexagonal-archi-kafka-keycloak-eureka-server:
-    container_name: exalt-hexagonal-archi-kafka-keycloak-eureka-server
-    image: placidenduwayo1/${SERVICE_REGISTRY_APPLICATION_NAME}:${SERVICE_REGISTRY_APPLICATION_TAG}
+    container_name: ${SERVICE_REGISTRY_APPLICATION_NAME}
+    image: placidenduwayo1/${SERVICE_REGISTRY_APPLICATION_NAME}:${APPLICATION_TAG}
     build:
       context: ../bank-account-app-back/exalt-hexagonal-archi-kafka-keycloak-eureka-server
       dockerfile: Dockerfile
@@ -150,7 +150,7 @@ services:
       - "${SERVICE_REGISTRY_SERVER_PORT}:${SERVICE_REGISTRY_SERVER_PORT}"
     environment:
       SERVICE_REGISTRY_APPLICATION_NAME: ${SERVICE_REGISTRY_APPLICATION_NAME}
-      SERVICE_REGISTRY_APPLICATION_TAG: ${SERVICE_REGISTRY_APPLICATION_TAG}
+      APPLICATION_TAG: ${APPLICATION_TAG}
       SERVICE_REGISTRY_SERVER_PORT: ${SERVICE_REGISTRY_SERVER_PORT}
     networks:
       - bank-account-app-net
@@ -162,6 +162,34 @@ services:
       timeout: 10s
       retries: 3
     restart: no
+
+  exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy:
+    container_name: ${GATEWAY_PROXY_APPLICATION_NAME}
+    image: placidenduwayo1/${GATEWAY_PROXY_APPLICATION_NAME}:${APPLICATION_TAG}
+    build:
+      context: ../bank-account-app-back/exalt-hexagonal-archi-kafka-keycloak-eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - "${GATEWAY_PROXY_SERVER_PORT}:${GATEWAY_PROXY_SERVER_PORT}"
+    environment:
+      GATEWAY_PROXY_APPLICATION_NAME: ${GATEWAY_PROXY_APPLICATION_NAME}
+      APPLICATION_TAG: ${APPLICATION_TAG}
+      GATEWAY_PROXY_SERVER_PORT: ${GATEWAY_PROXY_SERVER_PORT}
+      ROUTE1_ID: ${ROUTE1_ID}
+      ROUTE1_URI: ${ROUTE1_URI}
+      ROUTE1_PREDICATE: ${ROUTE1_PREDICATE}
+      ROUTE2_ID: ${ROUTE2_ID}
+      ROUTE2_URI: ${ROUTE2_URI}
+      ROUTE2_PREDICATE: ${ROUTE2_PREDICATE}
+      ROUTE3_ID: ${ROUTE3_ID}
+      ROUTE3_URI: ${ROUTE3_URI}
+      ROUTE3_PREDICATE: ${ROUTE3_PREDICATE}
+      ROUTE4_ID: ${ROUTE4_ID}
+      ROUTE4_URI: ${ROUTE4_URI}
+      ROUTE4_PREDICATE: ${ROUTE4_PREDICATE}
+      SERVICE_REGISTRY_APPLICATION_NAME: ${SERVICE_REGISTRY_APPLICATION_NAME}
+    networks:
+      - bank-account-app-net
 #------------ business microservices-----------------
 networks:
   bank-account-app-net:
