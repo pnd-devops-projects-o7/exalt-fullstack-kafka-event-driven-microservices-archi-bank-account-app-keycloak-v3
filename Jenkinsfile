@@ -10,7 +10,7 @@ pipeline {
                 checkout scmGit(
                         branches: [[name: "*/main"]],
                         extensions: [],
-                        userRemoteConfigs: [[url: "https://github.com/placidenduwayo1/exalt-fullstack-bank-account-app-base-microservices-v2.git"]])
+                        userRemoteConfigs: [[url: "https://github.com/pnd-devops-projects-o7/exalt-fullstack-kafka-event-driven-microservices-archi-bank-account-app-keycloak-v3.git"]])
             }
         }
         stage("Build") {
