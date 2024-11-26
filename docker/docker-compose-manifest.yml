@@ -157,7 +157,7 @@ services:
     healthcheck:
       # noinspection HttpUrlsUsage
       test: [ "CMD","curl","-I","http://${SERVICE_REGISTRY_APPLICATION_NAME}:${SERVICE_REGISTRY_SERVER_PORT}"]
-      start_period: 30
+      start_period: 30s
       interval: 15s
       timeout: 10s
       retries: 3
