@@ -5,8 +5,8 @@ pipeline {
         jdk "Java-21"
     }
     stages {
-        stage("Checkout"){
-            steps{
+        stage("Checkout") {
+            steps {
                 checkout scmGit
             }
         }
@@ -54,20 +54,20 @@ pipeline {
                 }
             }
         }
-       stage("Docker img Build") {
+        stage("Docker img Build") {
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: "dockerhub-credentials-jenkins", url: ""]){
+                    withDockerRegistry([credentialsId: "dockerhub-credentials-jenkins", url: ""]) {
                         sh "docker compose -f ./docker/docker-compose-manifest.yml build"
                         sh "docker system prune -f"
                     }
                 }
             }
         }
-        stage("Publish docker images"){
+        stage("Publish docker images") {
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: "dockerhub-credentials-jenkins", url: "" ]) {
+                    withDockerRegistry([credentialsId: "dockerhub-credentials-jenkins", url: ""]) {
                         sh "docker compose -f ./docker/docker-compose-manifest.yml push"
                     }
                 }
