@@ -190,6 +190,10 @@ services:
       SERVICE_REGISTRY_APPLICATION_NAME: ${SERVICE_REGISTRY_APPLICATION_NAME}
     networks:
       - bank-account-app-net
+    depends_on:
+      exalt-hexagonal-archi-kafka-keycloak-eureka-server:
+        condition: service_healthy
+    restart: no
 #------------ business microservices-----------------
 networks:
   bank-account-app-net:
