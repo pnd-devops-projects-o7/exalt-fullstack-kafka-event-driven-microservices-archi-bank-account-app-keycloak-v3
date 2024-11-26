@@ -13,19 +13,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>exalt-hexagonal-archi-kafka-keycloak-bs-ms-operation</name>
 	<description>exalt-hexagonal-archi-kafka-keycloak-bs-ms-operation</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 	<properties>
 		<java.version>21</java.version>
 		<spring-cloud.version>2024.0.0-RC1</spring-cloud.version>
@@ -107,6 +94,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>exalt-hexagonal-archi-kafka-keycloak-bs-ms-operation</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -118,6 +106,9 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
 				</configuration>
 			</plugin>
 		</plugins>

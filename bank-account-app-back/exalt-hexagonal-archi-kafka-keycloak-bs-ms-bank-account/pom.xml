@@ -94,6 +94,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>exalt-hexagonal-archi-kafka-keycloak-bs-ms-bank-account</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -105,6 +106,9 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
                 </configuration>
             </plugin>
         </plugins>

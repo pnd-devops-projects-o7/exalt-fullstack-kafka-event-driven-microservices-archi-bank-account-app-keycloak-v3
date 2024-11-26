@@ -38,7 +38,7 @@ pipeline {
                     dir("./bank-account-app-back/exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy/") {
                         archiveArtifacts "**/target/*.jar"
                     }
-                    dir("./backend/exalt-hexagonal-archi-kafka-keycloak-bs-ms-operation/") {
+                    dir("./bank-account-app-back/exalt-hexagonal-archi-kafka-keycloak-bs-ms-operation/") {
                         archiveArtifacts "**/target/*.jar"
                     }
                     dir("./bank-account-app-back/exalt-hexagonal-archi-kafka-keycloak-bs-ms-notification-service/") {
