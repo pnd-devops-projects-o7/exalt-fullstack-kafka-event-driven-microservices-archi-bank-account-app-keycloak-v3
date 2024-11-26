@@ -5,12 +5,16 @@ pipeline {
         jdk "Java-21"
     }
     stages {
-        stage("Stage: Build") {
+        stage("Checkout") {
             steps {
-                checkout scmGit(branches: [[name: "*/main"]],
-                        extensions: [lfs()],
-                        userRemoteConfigs: [[url: "https://github.com/pnd-devops-projects-o7/exalt-fullstack-kafka-event-driven-microservices-archi-bank-account-app-keycloak-v3.git"]]
-                )
+                checkout scmGit(
+                        branches: [[name: "*/main"]],
+                        extensions: [rfs],
+                        userRemoteConfigs: [[url: "https://github.com/placidenduwayo1/exalt-fullstack-bank-account-app-base-microservices-v2.git"]])
+            }
+        }
+        stage("Build") {
+            steps {
                 dir("./bank-account-app-back/exalt-hexagonal-archi-kafka-keycloak-eureka-server/") {
                     sh "mvn clean install"
                 }
@@ -53,20 +57,20 @@ pipeline {
                 }
             }
         }
-       stage("Stage: Docker img Build") {
+        stage("Docker img Build") {
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: "dockerhub-credentials-jenkins", url: ""]){
+                    withDockerRegistry([credentialsId: "dockerhub-credentials-jenkins", url: ""]) {
                         sh "docker compose -f ./docker/docker-compose-manifest.yml build"
                         sh "docker system prune -f"
                     }
                 }
             }
         }
-        stage("Stage: Publish docker images"){
+        stage("Publish docker images") {
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: "dockerhub-credentials-jenkins", url: "" ]) {
+                    withDockerRegistry([credentialsId: "dockerhub-credentials-jenkins", url: ""]) {
                         sh "docker compose -f ./docker/docker-compose-manifest.yml push"
                     }
                 }
