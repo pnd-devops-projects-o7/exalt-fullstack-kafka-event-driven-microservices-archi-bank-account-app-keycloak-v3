@@ -1,5 +1,5 @@
 {
-  "namespace": "com.exalt.exalthexagonalarchikafkakeycloakbsmsnotificationservice.domain.events",
+  "namespace": "com.exalt.exalthexagonalarchikafkakeycloakbsmsnotificationservice.kafkaevents.customer",
   "name": "CustomerEvent",
   "type": "record",
   "fields": [
