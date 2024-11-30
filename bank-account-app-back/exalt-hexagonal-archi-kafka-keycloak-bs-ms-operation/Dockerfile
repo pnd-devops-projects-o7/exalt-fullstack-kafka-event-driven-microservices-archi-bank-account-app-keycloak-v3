@@ -1,0 +1,37 @@
+FROM maven:3.9.8-eclipse-temurin-21-alpine AS builder
+ARG OPERATION_APPLICATION_NAME
+ARG OPERATION_SERVER_PORT
+ARG DATABASE_HOSTNAME
+ARG DATABASE_HOST_PORT
+ARG OPERATION_DATABASE
+ARG DATABASE_USERNAME
+ARG DATABASE_PASSWORD
+ARG SERVICE_REGISTRY_APPLICATION_NAME
+ARG SERVICE_REGISTRY_SERVER_PORT
+
+ENV OPERATION_APPLICATION_NAME=${OPERATION_APPLICATION_NAME}
+ENV OPERATION_SERVER_PORT=${OPERATION_SERVER_PORT}
+ENV DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
+ENV DATABASE_HOST_PORT=${DATABASE_HOST_PORT}
+ENV OPERATION_DATABASE=${OPERATION_DATABASE}
+ENV DATABASE_USERNAME=${DATABASE_USERNAME}
+ENV DATABASE_PASSWORD=${DATABASE_PASSWORD}
+ENV SERVICE_REGISTRY_APPLICATION_NAME=${SERVICE_REGISTRY_APPLICATION_NAME}
+ENV SERVICE_REGISTRY_SERVER_PORT=${SERVICE_REGISTRY_SERVER_PORT}
+
+WORKDIR /build/
+COPY pom.xml /build/
+COPY src /build/src
+RUN mvn package -DskipTest
+WORKDIR /build/target/
+RUN java -Djarmode=layertools -jar exalt-hexagonal-archi-kafka-keycloak-bs-ms-operation.jar extract
+
+FROM maven:3.9.8-eclipse-temurin-21-alpine AS final
+COPY --from=builder /build/target/dependencies/ ./
+COPY --from=builder /build/target/spring-boot-loader/ ./
+COPY --from=builder /build/target/snapshot-dependencies/ ./
+COPY --from=builder /build/target/application/ ./
+
+EXPOSE ${OPERATION_SERVER_PORT}
+
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]

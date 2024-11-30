@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: ${GATEWAY_PROXY_APPLICATION_NAME}
+
+  main:
+    banner-mode: off
+
+  cloud:
+    gateway:
+      route1:
+        id: ${ROUTE1_ID}
+        uri: ${ROUTE1_URI}
+        predicate: ${ROUTE1_PREDICATE}
+      route2:
+        id: ${ROUTE2_ID}
+        uri: ${ROUTE2_URI}
+        predicate: ${ROUTE2_PREDICATE}
+      route3:
+        id: ${ROUTE3_ID}
+        uri: ${ROUTE3_URI}
+        predicate: ${ROUTE3_PREDICATE}
+      route4:
+        id: ${ROUTE4_ID}
+        uri: ${ROUTE4_URI}
+        predicate: ${ROUTE4_PREDICATE}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-components: always
+      probes:
+        enabled: true # enable /actuator/health/liveness and /actuator/health/readiness for K8s
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${SERVICE_REGISTRY_APPLICATION_NAME}:${SERVICE_REGISTRY_SERVER_PORT}/eureka
+
+server:
+  port: ${GATEWAY_PROXY_SERVER_PORT}
