@@ -37,7 +37,7 @@ La partie backend de comprend:
 - **1 api microservice transverse**: 
     - ```exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy```  
     - la ***exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy*** route toutes les requêtes authentifiées par ***keycloak*** vers le backend.
-    - une ***résilience*** est implémentée dans la gateway-service-proxy lorsque le service backend demandé par l'utilisateur n'est pas disponible.
+    - une ***résilience*** est implémentée dans la ***gateway-service-proxy*** lorsque le service backend demandé par l'utilisateur n'est pas disponible.
 
 - chaque microservice métier utilse sa propre base de données MySql pour la persistance les data
 
