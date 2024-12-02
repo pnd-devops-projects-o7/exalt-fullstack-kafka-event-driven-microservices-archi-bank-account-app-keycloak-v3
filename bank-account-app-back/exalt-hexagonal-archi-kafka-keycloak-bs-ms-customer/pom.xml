@@ -18,7 +18,6 @@
 		<spring-cloud.version>2024.0.0-RC1</spring-cloud.version>
 		<kafka-avro-serializer.version>7.7.1</kafka-avro-serializer.version>
 		<avro.version>1.11.3</avro.version>
-		<sonar.exclusions>**/events/*</sonar.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
