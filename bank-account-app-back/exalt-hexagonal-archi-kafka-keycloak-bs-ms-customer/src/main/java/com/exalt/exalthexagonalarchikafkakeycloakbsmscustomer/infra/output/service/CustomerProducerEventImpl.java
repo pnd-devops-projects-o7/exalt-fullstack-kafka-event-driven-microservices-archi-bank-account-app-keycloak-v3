@@ -1,6 +1,6 @@
 package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.service;
 
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.CustomerEvent;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.CustomerEvent;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.output.CustomerProducerEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

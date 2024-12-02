@@ -1,13 +1,13 @@
 package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.usecase;
 
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.Customer;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.CustomerEvent;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.State;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.Customer;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.CustomerEvent;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.State;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.exceptions.*;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.input.InputService;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.output.CustomerOutputService;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.output.CustomerProducerEvent;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.AddressDto;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.AddressDto1;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.CustomerDto;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.CustomerRequestDto;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.CustomerResponseDto;
@@ -36,37 +36,25 @@ public class InputServiceImpl implements InputService {
 
     @Override
     public CustomerResponseDto createCustomer(CustomerRequestDto customerRequestDto) {
-        /*check validity of customer request dto*/
-        if (CustomerValidation.isInvalidCustomerRequestDto(customerRequestDto)) {
-            throw new InvalidInputFieldsException("data input invalid, please enter valid one(s)");
-        }
-
-        if (CustomerValidation.isInvalidCountry(customerRequestDto.addressDto().country())) {
-            throw new InputCountryNotExistsException("country input not exists in the world");
-        }
-
+        //validate customer input information
+        validateCustomerDtoInfos(customerRequestDto);
         if (CustomerValidation.isInvalidBirthCountry(customerRequestDto.addressDto().birthCountry())) {
             throw new InputBirthCountryNotExistsException("birth country input not exists in the world");
         }
-
-        if (CustomerValidation.isInvalidEmail(customerRequestDto.customerDto().email())) {
-            throw new InvalidEmailException("email input not a valid email");
-        }
-
         List<String> emails = loadAllPersistedCustomers().stream()
                 .map(customerResponseDto -> customerResponseDto.customerDto().email()).toList();
 
         if (CustomerValidation.emailAssigned(customerRequestDto.customerDto().email(), emails)) {
             throw new EmailProvidedAlreadyAssignedException("email provided already assigned");
         }
-
         CustomerEntity customerEntity = outputService.findCustomerBy(
                 customerRequestDto.customerDto().firstname(),
                 customerRequestDto.customerDto().lastname(),
                 customerRequestDto.customerDto().email());
 
         if (CustomerValidation.customerExists(customerEntity)) {
-            throw new CustomerWithSameInformationExistsException("customer input information already exists");
+            throw new CustomerWithSameInformationExistsException(String.format("customer input information %s,%s,%s already exists",
+                            customerEntity.getFirstname(), customerEntity.getFirstname(), customerEntity.getEmail()));
         }
         Customer customer = MapperService.map(customerRequestDto);
         CustomerEvent customerEvent = CustomerEvent.newBuilder()
@@ -81,7 +69,7 @@ public class InputServiceImpl implements InputService {
         outputService.createCustomer(saveAddressEntity, saveCustomerEntity);
         logger.log(Level.INFO, "publishing event {0}", customerEvent);
         customerProducerEvent.createCustomerEvent(customerEvent);
-        AddressDto addressDto = new AddressDto(customer.getAddress().getAddressId(),
+        AddressDto1 addressDto = new AddressDto1(customer.getAddress().getAddressId(),
                 customer.getAddress().getStreetNum(),
                 customer.getAddress().getStreetName(),
                 customer.getAddress().getPoBox(),
@@ -109,7 +97,7 @@ public class InputServiceImpl implements InputService {
     public CustomerResponseDto getCustomerBy(String firstname, String lastname, String email) {
         CustomerEntity customerEntity = outputService.findCustomerBy(firstname, lastname, email);
         if (customerEntity == null) {
-            throw new CustomerNotFoundException("customer not found");
+            throw new CustomerNotFoundException(String.format("customer not found with id %s,%s,%s", firstname,lastname,email));
         }
         return MapperService.map(customerEntity);
     }
@@ -143,10 +131,11 @@ public class InputServiceImpl implements InputService {
     @Override
     public CustomerResponseDto updateCustomerInfo(UUID customerId, CustomerRequestDto customerRequestDto) {
         CustomerEntity customerEntity = outputService.getCustomerById(customerId);
+        //validate customer input information
+        validateCustomerDtoInfos(customerRequestDto);
         if (customerEntity == null) {
-            throw new CustomerNotFoundException("customer with the id not found");
+            throw new CustomerNotFoundException(String.format("customer not found with id %s", customerId));
         }
-
         if(customerEntity.getState().equals(State.ARCHIVE)){
             throw new CustomerStateArchivedException("customer can not be updated, he is archived");
         }
@@ -174,6 +163,21 @@ public class InputServiceImpl implements InputService {
         customerProducerEvent.updateCustomerEvent(customerEvent);
 
         return MapperService.map(customerEntity);
+    }
+
+    private void validateCustomerDtoInfos(CustomerRequestDto customerRequestDto){
+        /*check validity of customer request dto*/
+        if (CustomerValidation.isInvalidCustomerRequestDto(customerRequestDto)) {
+            throw new InvalidInputFieldsException("data input invalid, please enter valid one(s)");
+        }
+
+        if (CustomerValidation.isInvalidCountry(customerRequestDto.addressDto().country())) {
+            throw new InputCountryNotExistsException("country input not exists in the world");
+        }
+
+        if (CustomerValidation.isInvalidEmail(customerRequestDto.customerDto().email())) {
+            throw new InvalidEmailException("email input not a valid email");
+        }
     }
 
 }

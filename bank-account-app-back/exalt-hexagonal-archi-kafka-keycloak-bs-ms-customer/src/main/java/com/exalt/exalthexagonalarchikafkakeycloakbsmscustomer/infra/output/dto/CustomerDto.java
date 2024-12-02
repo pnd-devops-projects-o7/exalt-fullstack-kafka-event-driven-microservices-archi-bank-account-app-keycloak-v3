@@ -1,7 +1,7 @@
 package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto;
 
 
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.State;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.State;
 
 import java.time.Instant;
 import java.util.UUID;

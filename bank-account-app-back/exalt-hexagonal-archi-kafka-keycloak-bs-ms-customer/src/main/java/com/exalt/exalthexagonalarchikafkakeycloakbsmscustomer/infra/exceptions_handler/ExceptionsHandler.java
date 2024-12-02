@@ -1,4 +1,4 @@
-package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.exceptionhandler;
+package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.exceptions_handler;
 
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.exceptions.*;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.ErrorDto;

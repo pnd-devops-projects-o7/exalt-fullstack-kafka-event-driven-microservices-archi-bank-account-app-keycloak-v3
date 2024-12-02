@@ -1,10 +1,10 @@
 package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.usecase;
 
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.Address;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.Customer;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.CustomerEvent;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.State;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.AddressDto;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.Address;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.Customer;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.CustomerEvent;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.State;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.AddressDto1;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.CustomerDto;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.CustomerRequestDto;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.dto.CustomerResponseDto;
@@ -66,7 +66,7 @@ public class MapperService {
                         customerEntity.getState(),
                         customerEntity.getCreatedAt()),
 
-                new AddressDto(customerEntity.getAddressEntity().getAddressId(),
+                new AddressDto1(customerEntity.getAddressEntity().getAddressId(),
                         customerEntity.getAddressEntity().getStreetNum(),
                         customerEntity.getAddressEntity().getStreetName(),
                         customerEntity.getAddressEntity().getPoBox(),

@@ -19,9 +19,7 @@ public class CustomerValidation {
                 || customerRequestDto.addressDto().poBox() < 10000 //5 digits for postal code
                 || customerRequestDto.addressDto().city().isBlank()
                 || customerRequestDto.addressDto().city().length() < 3// minimum length of city name
-                || customerRequestDto.addressDto().country().isBlank()
-                || customerRequestDto.addressDto().birthCountry().isBlank();
-
+                || customerRequestDto.addressDto().country().isBlank();
     }
     public static boolean isInvalidCountry(String country){
         /* check entered country is valid*/

@@ -7,7 +7,7 @@ spring:
   # kafka consumer
   kafka:
     consumer:
-      bootstrap-servers: http://localhost:9092,http://localhost:9093
+      bootstrap-servers: http://kafka-server1:19092,http://kafka-server2:29092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       properties:
@@ -17,7 +17,7 @@ spring:
     properties:
       schema:
         registry:
-          url: http://localhost:8081
+          url: http://schema-registry-service:8081
 
   # send mail for notification
   mail:

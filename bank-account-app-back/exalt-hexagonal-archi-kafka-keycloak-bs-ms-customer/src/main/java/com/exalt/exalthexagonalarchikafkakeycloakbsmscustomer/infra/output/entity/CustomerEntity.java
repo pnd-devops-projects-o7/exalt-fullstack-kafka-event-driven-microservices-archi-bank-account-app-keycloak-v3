@@ -1,6 +1,6 @@
 package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.entity;
 
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.State;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.State;
 import jakarta.persistence.*;
 import lombok.*;
 

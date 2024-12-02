@@ -1,6 +1,6 @@
 package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.output;
 
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events.CustomerEvent;
+import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.CustomerEvent;
 
 public interface CustomerProducerEvent {
     void createCustomerEvent(CustomerEvent customerEvent);
