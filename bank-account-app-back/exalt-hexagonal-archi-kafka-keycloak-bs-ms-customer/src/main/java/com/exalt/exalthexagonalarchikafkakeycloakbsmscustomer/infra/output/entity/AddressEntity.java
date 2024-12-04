@@ -20,7 +20,7 @@ public class AddressEntity {
     private UUID addressId;
     private int streetNum;
     private String streetName;
-    private int poBox;
+    private int postalCode;
     private String city;
     private String country;
     private String birthCountry;

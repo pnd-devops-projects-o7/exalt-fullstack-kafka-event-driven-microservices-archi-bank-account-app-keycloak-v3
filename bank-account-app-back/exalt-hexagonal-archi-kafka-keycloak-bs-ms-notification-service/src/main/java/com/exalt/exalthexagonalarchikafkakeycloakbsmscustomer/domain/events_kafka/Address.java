@@ -5,17 +5,19 @@
  */
 package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka;
 
-import org.apache.avro.message.BinaryMessageDecoder;
-import org.apache.avro.message.BinaryMessageEncoder;
-import org.apache.avro.message.SchemaStore;
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
+import org.apache.avro.message.BinaryMessageEncoder;
+import org.apache.avro.message.BinaryMessageDecoder;
+import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Address extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 5343951498435128946L;
+  private static final long serialVersionUID = -4017517503096634602L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Address\",\"namespace\":\"com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka\",\"fields\":[{\"name\":\"addressId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"streetNum\",\"type\":\"int\"},{\"name\":\"streetName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"poBox\",\"type\":\"int\"},{\"name\":\"city\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthCountry\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Address\",\"namespace\":\"com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka\",\"fields\":[{\"name\":\"addressId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"streetNum\",\"type\":\"int\"},{\"name\":\"streetName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"postalCode\",\"type\":\"int\"},{\"name\":\"city\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"country\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthCountry\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -77,7 +79,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
   private java.util.UUID addressId;
   private int streetNum;
   private java.lang.String streetName;
-  private int poBox;
+  private int postalCode;
   private java.lang.String city;
   private java.lang.String country;
   private java.lang.String birthCountry;
@@ -94,16 +96,16 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param addressId The new value for addressId
    * @param streetNum The new value for streetNum
    * @param streetName The new value for streetName
-   * @param poBox The new value for poBox
+   * @param postalCode The new value for postalCode
    * @param city The new value for city
    * @param country The new value for country
    * @param birthCountry The new value for birthCountry
    */
-  public Address(java.util.UUID addressId, java.lang.Integer streetNum, java.lang.String streetName, java.lang.Integer poBox, java.lang.String city, java.lang.String country, java.lang.String birthCountry) {
+  public Address(java.util.UUID addressId, java.lang.Integer streetNum, java.lang.String streetName, java.lang.Integer postalCode, java.lang.String city, java.lang.String country, java.lang.String birthCountry) {
     this.addressId = addressId;
     this.streetNum = streetNum;
     this.streetName = streetName;
-    this.poBox = poBox;
+    this.postalCode = postalCode;
     this.city = city;
     this.country = country;
     this.birthCountry = birthCountry;
@@ -122,7 +124,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     case 0: return addressId;
     case 1: return streetNum;
     case 2: return streetName;
-    case 3: return poBox;
+    case 3: return postalCode;
     case 4: return city;
     case 5: return country;
     case 6: return birthCountry;
@@ -155,7 +157,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     case 0: addressId = (java.util.UUID)value$; break;
     case 1: streetNum = (java.lang.Integer)value$; break;
     case 2: streetName = value$ != null ? value$.toString() : null; break;
-    case 3: poBox = (java.lang.Integer)value$; break;
+    case 3: postalCode = (java.lang.Integer)value$; break;
     case 4: city = value$ != null ? value$.toString() : null; break;
     case 5: country = value$ != null ? value$.toString() : null; break;
     case 6: birthCountry = value$ != null ? value$.toString() : null; break;
@@ -215,20 +217,20 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Gets the value of the 'poBox' field.
-   * @return The value of the 'poBox' field.
+   * Gets the value of the 'postalCode' field.
+   * @return The value of the 'postalCode' field.
    */
-  public int getPoBox() {
-    return poBox;
+  public int getPostalCode() {
+    return postalCode;
   }
 
 
   /**
-   * Sets the value of the 'poBox' field.
+   * Sets the value of the 'postalCode' field.
    * @param value the value to set.
    */
-  public void setPoBox(int value) {
-    this.poBox = value;
+  public void setPostalCode(int value) {
+    this.postalCode = value;
   }
 
   /**
@@ -326,7 +328,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     private java.util.UUID addressId;
     private int streetNum;
     private java.lang.String streetName;
-    private int poBox;
+    private int postalCode;
     private java.lang.String city;
     private java.lang.String country;
     private java.lang.String birthCountry;
@@ -354,8 +356,8 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
         this.streetName = data().deepCopy(fields()[2].schema(), other.streetName);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.poBox)) {
-        this.poBox = data().deepCopy(fields()[3].schema(), other.poBox);
+      if (isValidValue(fields()[3], other.postalCode)) {
+        this.postalCode = data().deepCopy(fields()[3].schema(), other.postalCode);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.city)) {
@@ -390,8 +392,8 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
         this.streetName = data().deepCopy(fields()[2].schema(), other.streetName);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.poBox)) {
-        this.poBox = data().deepCopy(fields()[3].schema(), other.poBox);
+      if (isValidValue(fields()[3], other.postalCode)) {
+        this.postalCode = data().deepCopy(fields()[3].schema(), other.postalCode);
         fieldSetFlags()[3] = true;
       }
       if (isValidValue(fields()[4], other.city)) {
@@ -528,40 +530,40 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     }
 
     /**
-      * Gets the value of the 'poBox' field.
+      * Gets the value of the 'postalCode' field.
       * @return The value.
       */
-    public int getPoBox() {
-      return poBox;
+    public int getPostalCode() {
+      return postalCode;
     }
 
 
     /**
-      * Sets the value of the 'poBox' field.
-      * @param value The value of 'poBox'.
+      * Sets the value of the 'postalCode' field.
+      * @param value The value of 'postalCode'.
       * @return This builder.
       */
-    public com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.Address.Builder setPoBox(int value) {
+    public com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.Address.Builder setPostalCode(int value) {
       validate(fields()[3], value);
-      this.poBox = value;
+      this.postalCode = value;
       fieldSetFlags()[3] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'poBox' field has been set.
-      * @return True if the 'poBox' field has been set, false otherwise.
+      * Checks whether the 'postalCode' field has been set.
+      * @return True if the 'postalCode' field has been set, false otherwise.
       */
-    public boolean hasPoBox() {
+    public boolean hasPostalCode() {
       return fieldSetFlags()[3];
     }
 
 
     /**
-      * Clears the value of the 'poBox' field.
+      * Clears the value of the 'postalCode' field.
       * @return This builder.
       */
-    public com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.Address.Builder clearPoBox() {
+    public com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.events_kafka.Address.Builder clearPostalCode() {
       fieldSetFlags()[3] = false;
       return this;
     }
@@ -694,7 +696,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
         record.addressId = fieldSetFlags()[0] ? this.addressId : (java.util.UUID) defaultValue(fields()[0]);
         record.streetNum = fieldSetFlags()[1] ? this.streetNum : (java.lang.Integer) defaultValue(fields()[1]);
         record.streetName = fieldSetFlags()[2] ? this.streetName : (java.lang.String) defaultValue(fields()[2]);
-        record.poBox = fieldSetFlags()[3] ? this.poBox : (java.lang.Integer) defaultValue(fields()[3]);
+        record.postalCode = fieldSetFlags()[3] ? this.postalCode : (java.lang.Integer) defaultValue(fields()[3]);
         record.city = fieldSetFlags()[4] ? this.city : (java.lang.String) defaultValue(fields()[4]);
         record.country = fieldSetFlags()[5] ? this.country : (java.lang.String) defaultValue(fields()[5]);
         record.birthCountry = fieldSetFlags()[6] ? this.birthCountry : (java.lang.String) defaultValue(fields()[6]);

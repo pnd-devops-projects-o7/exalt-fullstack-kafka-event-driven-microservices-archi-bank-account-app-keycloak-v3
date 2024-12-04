@@ -72,7 +72,7 @@ public class InputServiceImpl implements InputService {
         AddressDto1 addressDto = new AddressDto1(customer.getAddress().getAddressId(),
                 customer.getAddress().getStreetNum(),
                 customer.getAddress().getStreetName(),
-                customer.getAddress().getPoBox(),
+                customer.getAddress().getPostalCode(),
                 customer.getAddress().getCity(),
                 customer.getAddress().getCountry(),
                 customer.getAddress().getBirthCountry());
@@ -147,7 +147,7 @@ public class InputServiceImpl implements InputService {
                         .addressId(customerEntity.getAddressEntity().getAddressId())
                         .streetNum(customerRequestDto.addressDto().streetNum())
                         .streetName(customerRequestDto.addressDto().streetName())
-                        .poBox(customerRequestDto.addressDto().poBox())
+                        .postalCode(customerRequestDto.addressDto().postalCode())
                         .city(customerRequestDto.addressDto().city())
                         .country(customerRequestDto.addressDto().country())
                         .birthCountry(customerEntity.getAddressEntity().getBirthCountry())

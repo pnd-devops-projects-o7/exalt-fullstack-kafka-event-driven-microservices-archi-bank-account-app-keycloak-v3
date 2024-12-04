@@ -9,11 +9,15 @@ services:
       - bank-account-app-volume:/var/lib/mysql
       - ./bs-ms-dbs:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PWD}
+      # The user,password that Keycloak is going to create and use
+      MYSQL_DATABASE: ${KEYCLOAK_DB}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PWD}
     networks:
       - bank-account-app-net
     healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "${SERVER_ADDRESS}", "-uroot", "-p${DATABASE_ROOT_PASSWORD}" ]
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "${SERVER_ADDRESS}", "-u${DATABASE_ROOT_USER}", "-p${DATABASE_ROOT_PWD}" ]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -136,11 +140,17 @@ services:
     networks:
       - bank-account-app-net
     environment:
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-    command:
-      - "start-dev"
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+      KC_DB: mysql
+      KC_DB_URL: jdbc:mysql://bank-account-app-db-server/${KEYCLOAK_DB}
+      KC_DB_USERNAME: ${DATABASE_USER}
+      KC_DB_PASSWORD: ${DATABASE_PWD}
+    command: [ "start-dev","--import-realm" ]
     restart: no
+    depends_on:
+      bank-account-app-db-server:
+        condition: service_healthy
 
   exalt-hexagonal-archi-kafka-keycloak-eureka-server:
     container_name: ${SERVICE_REGISTRY_APPLICATION_NAME}
@@ -158,7 +168,7 @@ services:
       - bank-account-app-net
     healthcheck:
       # noinspection HttpUrlsUsage
-      test: [ "CMD","curl","-I","http://${SERVICE_REGISTRY_APPLICATION_NAME}:${SERVICE_REGISTRY_SERVER_PORT}"]
+      test: [ "CMD","curl","-I","http://${SERVICE_REGISTRY_APPLICATION_NAME}:${SERVICE_REGISTRY_SERVER_PORT}" ]
       start_period: 30s
       interval: 15s
       timeout: 10s
@@ -197,7 +207,7 @@ services:
       exalt-hexagonal-archi-kafka-keycloak-eureka-server:
         condition: service_healthy
     restart: no
-#------------ business microservices-----------------
+  #------------ business microservices-----------------
   exalt-hexagonal-archi-kafka-keycloak-bs-ms-bank-account:
     container_name: ${BANK_ACCOUNT_APPLICATION_NAME}
     image: placidenduwayo1/${BANK_ACCOUNT_APPLICATION_NAME}:${APPLICATION_TAG}
@@ -212,8 +222,8 @@ services:
       DATABASE_HOSTNAME: ${DATABASE_HOSTNAME}
       DATABASE_HOST_PORT: ${DATABASE_HOST_PORT}
       BANK_ACCOUNT_DATABASE: ${BANK_ACCOUNT_DATABASE}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_ROOT_USER: ${DATABASE_ROOT_USER}
+      DATABASE_ROOT_PWD: ${DATABASE_ROOT_PWD}
       SERVICE_REGISTRY_APPLICATION_NAME: ${SERVICE_REGISTRY_APPLICATION_NAME}
       SERVICE_REGISTRY_SERVER_PORT: ${SERVICE_REGISTRY_SERVER_PORT}
     depends_on:
@@ -243,8 +253,8 @@ services:
       DATABASE_HOSTNAME: ${DATABASE_HOSTNAME}
       DATABASE_HOST_PORT: ${DATABASE_HOST_PORT}
       CUSTOMER_DATABASE: ${CUSTOMER_DATABASE}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_ROOT_USER: ${DATABASE_ROOT_USER}
+      DATABASE_ROOT_PWD: ${DATABASE_ROOT_PWD}
       SERVICE_REGISTRY_APPLICATION_NAME: ${SERVICE_REGISTRY_APPLICATION_NAME}
       SERVICE_REGISTRY_SERVER_PORT: ${SERVICE_REGISTRY_SERVER_PORT}
       KAFKA_TOPIC_NAME: ${KAFKA_TOPIC_NAME}
@@ -280,8 +290,8 @@ services:
       DATABASE_HOSTNAME: ${DATABASE_HOSTNAME}
       DATABASE_HOST_PORT: ${DATABASE_HOST_PORT}
       OPERATION_DATABASE: ${OPERATION_DATABASE}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_ROOT_USER: ${DATABASE_ROOT_USER}
+      DATABASE_ROOT_PWD: ${DATABASE_ROOT_PWD}
       SERVICE_REGISTRY_APPLICATION_NAME: ${SERVICE_REGISTRY_APPLICATION_NAME}
       SERVICE_REGISTRY_SERVER_PORT: ${SERVICE_REGISTRY_SERVER_PORT}
     depends_on:

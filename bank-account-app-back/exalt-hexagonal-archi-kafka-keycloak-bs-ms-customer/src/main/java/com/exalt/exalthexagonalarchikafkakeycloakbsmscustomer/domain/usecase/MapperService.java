@@ -30,7 +30,7 @@ public class MapperService {
                         .setAddressId(UUID.randomUUID())
                         .setStreetNum(customerRequestDto.addressDto().streetNum())
                         .setStreetName(customerRequestDto.addressDto().streetName())
-                        .setPoBox(customerRequestDto.addressDto().poBox())
+                        .setPostalCode(customerRequestDto.addressDto().postalCode())
                         .setCity(customerRequestDto.addressDto().city())
                         .setCountry(customerRequestDto.addressDto().country())
                         .setBirthCountry(customerRequestDto.addressDto().birthCountry())
@@ -50,7 +50,7 @@ public class MapperService {
                         .addressId(customer.getAddress().getAddressId())
                         .streetNum(customer.getAddress().getStreetNum())
                         .streetName(customer.getAddress().getStreetName())
-                        .poBox(customer.getAddress().getPoBox())
+                        .postalCode(customer.getAddress().getPostalCode())
                         .city(customer.getAddress().getCity())
                         .country(customer.getAddress().getCountry())
                         .birthCountry(customer.getAddress().getBirthCountry())
@@ -69,7 +69,7 @@ public class MapperService {
                 new AddressDto1(customerEntity.getAddressEntity().getAddressId(),
                         customerEntity.getAddressEntity().getStreetNum(),
                         customerEntity.getAddressEntity().getStreetName(),
-                        customerEntity.getAddressEntity().getPoBox(),
+                        customerEntity.getAddressEntity().getPostalCode(),
                         customerEntity.getAddressEntity().getCity(),
                         customerEntity.getAddressEntity().getCountry(),
                         customerEntity.getAddressEntity().getBirthCountry())
@@ -88,7 +88,7 @@ public class MapperService {
                         .addressId(customerResponseDto.addressDto().addressId())
                         .streetNum(customerResponseDto.addressDto().streetNum())
                         .streetName(customerResponseDto.addressDto().streetName())
-                        .poBox(customerResponseDto.addressDto().poBox())
+                        .postalCode(customerResponseDto.addressDto().postalCode())
                         .city(customerResponseDto.addressDto().city())
                         .country(customerResponseDto.addressDto().country())
                         .birthCountry(customerResponseDto.addressDto().birthCountry())
@@ -109,7 +109,7 @@ public class MapperService {
                                 .setAddressId(customerEntity.getAddressEntity().getAddressId())
                                 .setStreetNum(customerEntity.getAddressEntity().getStreetNum())
                                 .setStreetName(customerEntity.getAddressEntity().getStreetName())
-                                .setPoBox(customerEntity.getAddressEntity().getPoBox())
+                                .setPostalCode(customerEntity.getAddressEntity().getPostalCode())
                                 .setCity(customerEntity.getAddressEntity().getCity())
                                 .setCountry(customerEntity.getAddressEntity().getCountry())
                                 .setBirthCountry(customerEntity.getAddressEntity().getBirthCountry())
