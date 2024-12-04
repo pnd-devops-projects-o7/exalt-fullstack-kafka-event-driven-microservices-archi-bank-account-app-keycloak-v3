@@ -5,14 +5,16 @@
 - Une **infrastructure Kafka** est mise en place:
     - pour persister et distribuer les événements liés à la modification des données dans la BDD.
     - our une communication asynchrone entre les microservices
-- Un **KeyCloak authentication provider** est mise en place, une implémentation de la sécurité est mise en place dans le **gateway-service-proxy** pour protéger les ressources backend.
+- Un **KeyCloak authentication provider** est mise en place, une implémentation de la sécurité est mise en place dans Chaque backend microservice pour protéger les ressources des backends.
 - Une **application frontend** en Angular 16 pour servir de UI utilisateur.
 - Une workflow est mise en place avec Jenkins pour automatiser les jobs: ***build***, ***test***, ***docker build***, ***docker push***.
 
 ## Bank-Account-App architecture
+L'architecture globale de l'application **Bank-Account-App**
 ![application-architecture](exalt-bank-account-app-v3.jpg)
 
 ## Bank-Account-App conceptual model
+Modèle global conceptuel de l'application **Bank-Account-App**
 ![conceptual-model](exalt-bank-account-conception.png)
 
 ## Authentication & authorization flows to backend resources
@@ -45,7 +47,7 @@ La partie backend de comprend:
 - **infrastructure kafka**: pour la persistance et la distribution des événements kafka
     - un zookeeper-server,  
     - 2 kafka-servers,
-    - un schema-registry-service ,
+    - un schema-registry-service
     - un kafka-UI
 
 - Tout l'ecosystème des applications de **Bank-Account-App** sont containeurisées avec **docker** et déployés ensuite dans un cluster locale **Minikuke** avec **Kubernetes**
