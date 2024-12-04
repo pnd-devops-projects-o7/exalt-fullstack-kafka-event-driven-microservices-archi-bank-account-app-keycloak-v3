@@ -16,7 +16,7 @@ public class CustomerValidation {
                 || customerRequestDto.customerDto().email().isBlank()
                 || customerRequestDto.addressDto().streetNum() < 1
                 || customerRequestDto.addressDto().streetName().isBlank()
-                || customerRequestDto.addressDto().poBox() < 10000 //5 digits for postal code
+                || customerRequestDto.addressDto().postalCode() < 10000 //5 digits for postal code
                 || customerRequestDto.addressDto().city().isBlank()
                 || customerRequestDto.addressDto().city().length() < 3// minimum length of city name
                 || customerRequestDto.addressDto().country().isBlank();

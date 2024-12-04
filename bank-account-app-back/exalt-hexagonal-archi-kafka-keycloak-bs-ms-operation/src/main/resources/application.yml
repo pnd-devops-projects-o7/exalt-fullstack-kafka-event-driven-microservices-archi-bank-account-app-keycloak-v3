@@ -9,8 +9,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DATABASE_HOSTNAME}:${DATABASE_HOST_PORT}/${OPERATION_DATABASE}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    username: ${DATABASE_ROOT_USER}
+    password: ${DATABASE_ROOT_PWD}
 
   jpa:
     hibernate:
@@ -20,8 +20,8 @@ spring:
     baseline-on-migrate: true
     validate-on-migrate: true
     enabled: true
-    user: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    user: ${DATABASE_ROOT_USER}
+    password: ${DATABASE_ROOT_PWD}
 
 server:
   port: ${OPERATION_SERVER_PORT}

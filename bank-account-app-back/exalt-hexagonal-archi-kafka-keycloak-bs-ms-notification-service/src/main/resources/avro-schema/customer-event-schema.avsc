@@ -75,7 +75,7 @@
                   "type": "string"
                 },
                 {
-                  "name": "poBox",
+                  "name": "postalCode",
                   "type": "int"
                 },
                 {
