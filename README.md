@@ -28,29 +28,36 @@ La partie backend de comprend:
 
  - **4 applications microservices métiers**:
     - ```exalt-hexagonal-archi-kafka-keycloak-bs-ms-customer```
-        - managing customers
+        - managing customers, 
+        - oauth2 authentication & authorization est implémenté pour authentifier toutes les requêtes vers ce backend
     - ```exalt-hexagonal-archi-kafka-keycloak-bs-ms-bank-account```
         - managingg bank-accounts
+        - oauth2 authentication & authorization est implémenté pour authentifier toutes les requêtes vers ce backend
     - ```exalt-hexagonal-archi-kafka-keycloak-bs-ms-operation```,
         - managing operations on bank-accounts
+        - oauth2 authentication & authorization est implémenté pour authentifier toutes les requêtes vers ce backend
     - ```exalt-hexagonal-archi-kafka-keycloak-bs-ms-notification-service```
         - envoie une notification par mail lorsqu'une operation d'écriture se produit sur un customer, un compte ou une operation 
 
-- **1 api microservice transverse**: 
-    - ```exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy```  
-    - la ***exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy*** route toutes les requêtes authentifiées par ***keycloak*** vers le backend.
-        - oauth2 authentication service est implémenté au niveau de la gateway-service proxy pour authentifier toutes les requêtes vers le backend
-    - une ***résilience*** est implémentée dans la ***gateway-service-proxy*** lorsque le service backend demandé par l'utilisateur n'est pas disponible.
-
 - chaque microservice métier utilse sa propre base de données MySql pour la persistance les data
 
+- **1 api microservice transverse**: 
+    - ```exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy```  
+    - la ***exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy*** route toutes les requêtes vers le backend.
+    - une forme de ***résilience*** est implémentée dans la ***gateway-service-proxy*** lorsque le backend demandé n'est pas disponible.
+
 - **infrastructure kafka**: pour la persistance et la distribution des événements kafka
-    - un zookeeper-server,  
-    - 2 kafka-servers,
+    - un zookeeper-server 
+    - 2 kafka-servers
     - un schema-registry-service
+        - pour definir le modèle commun de message pour le **producer** et le **consumer**
+        - utilise **avro** pour définir ce modèle
     - un kafka-UI
 
-- Tout l'ecosystème des applications de **Bank-Account-App** sont containeurisées avec **docker** et déployés ensuite dans un cluster locale **Minikuke** avec **Kubernetes**
+- Tout l'ecosystème des applications de **Bank-Account-App** est containeurisé avec **docker** et déployés ensuite dans un cluster locale **Minikuke** avec **Kubernetes**
+    - **docker engine** pour construire les images docker pour chaque service
+    - **docker compose** pour prépaper le le déploiement de la stack des containers 
+    - cluster local **Minikuke** ensuite dans le cluster GCP avec **GKE**: Google Kubernetes engine
 
 # Partie Frontend
 
