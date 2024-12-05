@@ -15,6 +15,7 @@ import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.entit
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.entity.CustomerEntity;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +33,11 @@ public class InputServiceImpl implements InputService {
     public InputServiceImpl(CustomerProducerEvent customerProducerEvent, CustomerOutputService outputService) {
         this.customerProducerEvent = customerProducerEvent;
         this.outputService = outputService;
+    }
+
+    @Override
+    public Map<String, Map<String, String>> getWelcome() {
+        return outputService.getWelcome();
     }
 
     @Override

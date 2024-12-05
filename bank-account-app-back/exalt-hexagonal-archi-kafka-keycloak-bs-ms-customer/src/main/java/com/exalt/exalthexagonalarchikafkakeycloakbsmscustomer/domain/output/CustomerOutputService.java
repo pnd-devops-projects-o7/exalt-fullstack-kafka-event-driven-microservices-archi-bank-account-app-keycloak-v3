@@ -4,6 +4,7 @@ import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.entit
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.entity.CustomerEntity;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface CustomerOutputService {
@@ -16,4 +17,6 @@ public interface CustomerOutputService {
 
     CustomerEntity archiveCustomer(CustomerEntity customerEntity);
     void updateCustomerInfo(AddressEntity addressEntity, CustomerEntity customerEntity);
+
+    Map<String, Map<String, String>> getWelcome();
 }

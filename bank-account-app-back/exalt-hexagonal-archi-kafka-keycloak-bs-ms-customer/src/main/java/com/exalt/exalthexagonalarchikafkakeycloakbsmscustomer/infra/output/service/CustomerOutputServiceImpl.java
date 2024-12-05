@@ -5,15 +5,27 @@ import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.entit
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.entity.CustomerEntity;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.repository.AddressRepo;
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.repository.CustomerRepo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
 public class CustomerOutputServiceImpl implements CustomerOutputService {
     private final CustomerRepo customerRepo;
     private final AddressRepo addressRepo;
+    @Value("${application.welcome-message}")
+    private String welcome;
+    @Value("${application.managed-operations.operation1}")
+    private String op1;
+    @Value("${application.managed-operations.operation2}")
+    private String op2;
+    @Value("${application.managed-operations.operation3}")
+    private String op3;
+    @Value("${application.managed-operations.operation4}")
+    private String op4;
 
     public CustomerOutputServiceImpl(CustomerRepo customerRepo, AddressRepo addressRepo) {
         this.customerRepo = customerRepo;
@@ -51,5 +63,11 @@ public class CustomerOutputServiceImpl implements CustomerOutputService {
     public void updateCustomerInfo(AddressEntity addressModel, CustomerEntity customerModel) {
         addressRepo.save(addressModel);
         customerRepo.save(customerModel);
+    }
+
+    @Override
+    public Map<String, Map<String, String>> getWelcome() {
+        return Map.of(welcome,
+                Map.of("operation1",op1, "operation2", op2,"operation3", op3, "operation4", op4));
     }
 }
