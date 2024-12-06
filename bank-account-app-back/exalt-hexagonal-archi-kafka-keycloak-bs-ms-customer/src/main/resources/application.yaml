@@ -66,6 +66,16 @@ kafka:
 
 server:
   port: ${CUSTOMER_SERVER_PORT}
+
+# welcoming message
+application:
+  welcome-message: welcome to customer management application
+  managed-operations:
+    operation1: create a customer
+    operation2: list all existing customers
+    operation3: archive a customer
+    operation4: and so off
+
 # atcuator config, to be used by K8s for healthcheck
 management:
   endpoints:
