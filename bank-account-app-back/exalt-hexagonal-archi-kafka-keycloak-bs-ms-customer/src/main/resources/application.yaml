@@ -40,7 +40,6 @@ spring:
       schema:
         registry:
           url: http://localhost:8081
-# kafka topic configuration: duration time and size of message, topic partitions and topic replicas
   # security config: urls for Keycloak authentication provider
   security:
     oauth2:
@@ -48,7 +47,13 @@ spring:
         jwt:
           issuer-uri: ${JWT_ISSUER}
           jwk-set-uri: ${JWT_ISSUER}/protocol/openid-connect/certs
-
+# keycloak client id
+jwt:
+  oauth:
+    converter:
+      client-id: ${CUSTOMER_KEYCLOAK_CLIENT_ID}
+      principal-attribute: preferred_username
+# kafka topic configuration: duration time and size of message, topic partitions and topic replicas
 kafka:
   topic-config:
     name: ${KAFKA_TOPIC_NAME}
