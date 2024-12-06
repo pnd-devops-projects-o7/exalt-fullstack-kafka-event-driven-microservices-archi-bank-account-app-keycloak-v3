@@ -17,7 +17,7 @@ L'architecture globale de l'application **Bank-Account-App**
 
 ## Bank-Account-App conceptual model
 Modèle global conceptuel de l'application **Bank-Account-App**
-![conceptual-model](exalt-bank-account-conception.png)
+![conceptual-model](exalt-account-conception.jpg)
 
 ## Authentication & authorization flows to backend resources
 ![resources-authentication](./authentication-authorization-flow.png)
