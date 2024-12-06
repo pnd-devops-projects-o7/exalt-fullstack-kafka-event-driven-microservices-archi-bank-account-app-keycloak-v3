@@ -2,12 +2,14 @@
 - **Bank-Account-App** est application fullstack (Java 21 /Angular 16) orientée microservices composée des microservices **métiers** et des  microservices **transverses**.
     - la communication entre les microservices se fait de manière **asynchrone** via une **infrastructure Kafka**
 - Chaque microservice métier est implémenté dans une **architecture hexagonale**, des tests unitaires sont écrits pour garantir la qualité du code source.
+    - **SonarQube** est utilisé pour checker les vulnérabilités, le code smell, la couverture de code et la sécurité
 - Une **infrastructure Kafka** est mise en place:
     - pour persister et distribuer les événements liés à la modification des données dans la BDD.
-    - our une communication asynchrone entre les microservices
-- Un **KeyCloak authentication provider** est mise en place, une implémentation de la sécurité est mise en place dans Chaque backend microservice pour protéger les ressources des backends.
-- Une **application frontend** en Angular 16 pour servir de UI utilisateur.
-- Une workflow est mise en place avec Jenkins pour automatiser les jobs: ***build***, ***test***, ***docker build***, ***docker push***.
+    - assurer une communication asynchrone entre les microservices
+- Un **KeyCloak authentication provider** est utilisé et la sécurité des ressources des backends (microservices) est implémentée.
+    - utilisation d'un **JWT** géré par **KeyCloak**
+- Une **application frontend** en Angular 16 pour servir de ui aux utilisateurs.
+- mise en place d'un workflow avec Jenkins pour automatiser les jobs: ***build***, ***test***, ***docker build***, ***docker push***.
 
 ## Bank-Account-App architecture
 L'architecture globale de l'application **Bank-Account-App**
