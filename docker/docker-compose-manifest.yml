@@ -12,8 +12,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PWD}
       # The user,password that Keycloak is going to create and use
       MYSQL_DATABASE: ${KEYCLOAK_DB}
-      MYSQL_USER: ${DATABASE_USER}
-      MYSQL_PASSWORD: ${DATABASE_PWD}
+      MYSQL_USER: ${KEYCLOAK_DATABASE_USER}
+      MYSQL_PASSWORD: ${KEYCLOAK_DATABASE_PWD}
     networks:
       - bank-account-app-net
     healthcheck:
@@ -108,8 +108,8 @@ services:
       - bank-account-app-net
     restart: no
 
-  kafka-UI:
-    container_name: kafka-UI
+  kafka-ui:
+    container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
     ports:
       - 8083:8080
@@ -132,25 +132,38 @@ services:
       - bank-account-app-net
     restart: no
 
-  keycloak-auth-provider-bank-account-app:
-    container_name: keycloak-auth-provider-bank-account-app
+  keycloak-authentication-provider-bank-account-app:
+    container_name: keycloak-authentication-provider-bank-account-app
     image: quay.io/keycloak/keycloak:26.0.6
-    ports:
-      - 8080:8080
     networks:
       - bank-account-app-net
     environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
-      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
       KC_DB: mysql
       KC_DB_URL: jdbc:mysql://bank-account-app-db-server/${KEYCLOAK_DB}
-      KC_DB_USERNAME: ${DATABASE_USER}
-      KC_DB_PASSWORD: ${DATABASE_PWD}
-    command: [ "start-dev","--import-realm" ]
-    restart: no
+      KC_DB_USERNAME: ${KEYCLOAK_DATABASE_USER}
+      KC_DB_PASSWORD: ${KEYCLOAK_DATABASE_PWD}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+      KC_HOSTNAME: localhost
+      KC_HTTP_PORT: 8380
+      KC_HTTP_ENABLED: true
+      KC_HTTPS_ENABLED: false
+      #keycloak in production configuration
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/server.crt
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key
+    volumes:
+      - ../keycloak/server.crt:/opt/keycloak/conf/server.crt
+      - ../keycloak/server.key:/opt/keycloak/conf/server.key
+    command:
+      - start-dev
+      - --verbose
     depends_on:
       bank-account-app-db-server:
         condition: service_healthy
+    ports:
+      - 8380:8380
+      - 8443:8443
+    restart: no
 
   exalt-hexagonal-archi-kafka-keycloak-eureka-server:
     container_name: ${SERVICE_REGISTRY_APPLICATION_NAME}
@@ -167,7 +180,6 @@ services:
     networks:
       - bank-account-app-net
     healthcheck:
-      # noinspection HttpUrlsUsage
       test: [ "CMD","curl","-I","http://${SERVICE_REGISTRY_APPLICATION_NAME}:${SERVICE_REGISTRY_SERVER_PORT}" ]
       start_period: 30s
       interval: 15s
@@ -175,18 +187,18 @@ services:
       retries: 3
     restart: no
 
-  exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy:
-    container_name: ${GATEWAY_PROXY_APPLICATION_NAME}
-    image: placidenduwayo1/${GATEWAY_PROXY_APPLICATION_NAME}:${APPLICATION_TAG}
+  exalt-hexagonal-archi-keycloak-backend-gateway-oauth2-client:
+    container_name: ${BACKEND_GATEWAY_CLIENT_APP_NAME}
+    image: placidenduwayo1/${BACKEND_GATEWAY_CLIENT_APP_NAME}:${APPLICATION_TAG}
     build:
-      context: ../bank-account-app-back/exalt-hexagonal-archi-kafka-keycloak-gateway-service-proxy
+      context: ../bank-account-app-back/exalt-hexagonal-archi-keycloak-backend-gateway-oauth2-client
       dockerfile: Dockerfile
     ports:
-      - "${GATEWAY_PROXY_SERVER_PORT}:${GATEWAY_PROXY_SERVER_PORT}"
+      - "${BACKEND_GATEWAY_CLIENT_SERVER_PORT}:${BACKEND_GATEWAY_CLIENT_SERVER_PORT}"
     environment:
-      GATEWAY_PROXY_APPLICATION_NAME: ${GATEWAY_PROXY_APPLICATION_NAME}
+      BACKEND_GATEWAY_CLIENT_APP_NAME: ${BACKEND_GATEWAY_CLIENT_APP_NAME}
       APPLICATION_TAG: ${APPLICATION_TAG}
-      GATEWAY_PROXY_SERVER_PORT: ${GATEWAY_PROXY_SERVER_PORT}
+      BACKEND_GATEWAY_CLIENT_SERVER_PORT: ${BACKEND_GATEWAY_CLIENT_SERVER_PORT}
       ROUTE1_ID: ${ROUTE1_ID}
       ROUTE1_URI: ${ROUTE1_URI}
       ROUTE1_PREDICATE: ${ROUTE1_PREDICATE}
@@ -240,19 +252,19 @@ services:
     restart: no
 
   exalt-hexagonal-archi-kafka-keycloak-bs-ms-customer:
-    container_name: ${CUSTOMER_APPLICATION_NAME}
-    image: placidenduwayo1/${CUSTOMER_APPLICATION_NAME}:${APPLICATION_TAG}
+    container_name: ${CUSTOMER_API_APP_NAME}
+    image: placidenduwayo1/${CUSTOMER_API_APP_NAME}:${APPLICATION_TAG}
     build:
       context: ../bank-account-app-back/exalt-hexagonal-archi-kafka-keycloak-bs-ms-customer
       dockerfile: Dockerfile
     ports:
-      - ${CUSTOMER_SERVER_PORT}:${CUSTOMER_SERVER_PORT}
+      - ${CUSTOMER_API_SERVER_PORT}:${CUSTOMER_API_SERVER_PORT}
     environment:
-      CUSTOMER_APPLICATION_NAME: ${CUSTOMER_APPLICATION_NAME}
-      CUSTOMER_SERVER_PORT: ${CUSTOMER_SERVER_PORT}
+      CUSTOMER_API_APP_NAME: ${CUSTOMER_API_APP_NAME}
+      CUSTOMER_API_SERVER_PORT: ${CUSTOMER_API_SERVER_PORT}
       DATABASE_HOSTNAME: ${DATABASE_HOSTNAME}
       DATABASE_HOST_PORT: ${DATABASE_HOST_PORT}
-      CUSTOMER_DATABASE: ${CUSTOMER_DATABASE}
+      CUSTOMER_API_DB: ${CUSTOMER_API_DB}
       DATABASE_ROOT_USER: ${DATABASE_ROOT_USER}
       DATABASE_ROOT_PWD: ${DATABASE_ROOT_PWD}
       SERVICE_REGISTRY_APPLICATION_NAME: ${SERVICE_REGISTRY_APPLICATION_NAME}
@@ -264,7 +276,7 @@ services:
       KAFKA_TOPIC_RETENTION_SIZE: ${KAFKA_TOPIC_RETENTION_SIZE}
       KAFKA_TOPIC_RETENTION_CLEANUP_POLICY: ${KAFKA_TOPIC_RETENTION_CLEANUP_POLICY}
       JWT_ISSUER: ${JWT_ISSUER}
-      CUSTOMER_KEYCLOAK_CLIENT_ID: ${CUSTOMER_KEYCLOAK_CLIENT_ID}
+      KEYCLOAK_URL: http://my.keycloak-auth-provider.org:8380/realms/pnd_realm
     depends_on:
       bank-account-app-db-server:
         condition: service_healthy

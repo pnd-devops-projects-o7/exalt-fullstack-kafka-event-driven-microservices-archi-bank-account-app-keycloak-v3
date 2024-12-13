@@ -1,4 +1,4 @@
-# Résumé
+# Bank-Account-App [Micro services | Spring boot 3 | Spring cloud | Kafka]
 - **Bank-Account-App** est application fullstack (Java 21 /Angular 16) orientée microservices composée des microservices **métiers** et des  microservices **transverses**.
     - la communication entre les microservices se fait de manière **asynchrone** via une **infrastructure Kafka**
 - Chaque microservice métier est implémenté dans une **architecture hexagonale**, des tests unitaires sont écrits pour garantir la qualité du code source.
@@ -13,14 +13,14 @@
 
 ## Bank-Account-App architecture
 L'architecture globale de l'application **Bank-Account-App**
-![application-architecture](exalt-bank-account-app-v3.jpg)
+![application-architecture](diagrams/Peek%202024-12-13%2013-41.gif)
 
 ## Bank-Account-App conceptual model
 Modèle global conceptuel de l'application **Bank-Account-App**
-![conceptual-model](exalt-account-conception.jpg)
+![conceptual-model](diagrams/exalt-account-conception.jpg)
 
 ## Authentication & authorization flows to backend resources
-![resources-authentication](./authentication-authorization-flow.png)
+![resources-authentication](diagrams/authentication-authorization-flow.png)
 - for client, we use ***postman*** and an ***Angular application***
 - for authentication & authorization server we use ***KeyCloak***
 - backend resources is a ***Bank-Account-App*** base microservices

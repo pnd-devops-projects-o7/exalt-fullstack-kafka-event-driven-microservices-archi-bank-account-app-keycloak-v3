@@ -21,8 +21,7 @@ public class CustomerApiWeb {
     private final InputService inputService;
 
     @GetMapping
-    //accessible to any user
-    @Secured({"client_user","client_admin","client_owner"})
+   @Secured({"client_user","client_admin","client_owner"})
     public ResponseEntity<Map<String, Map<String,String>>> welcome(){
         return ResponseEntity.ok().body(inputService.getWelcome());
     }
