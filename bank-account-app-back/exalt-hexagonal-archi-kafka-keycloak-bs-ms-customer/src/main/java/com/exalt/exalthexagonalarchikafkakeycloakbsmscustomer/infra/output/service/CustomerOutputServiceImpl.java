@@ -1,10 +1,6 @@
 package com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.service;
 
 import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.domain.output.CustomerOutputService;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.entity.AddressEntity;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.entity.CustomerEntity;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.repository.AddressRepo;
-import com.exalt.exalthexagonalarchikafkakeycloakbsmscustomer.infra.output.repository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
